@@ -22,6 +22,7 @@ func start_grid(x, y):
             tile.calculate_position(i,j)
             gridmap[i].append(tile)
             add_child(tile)
+            tile.connect("path_tile_clicked", self, "handle_tile_click")
             
 func print_grid():
     print(gridmap)
@@ -32,6 +33,7 @@ func breadth_first_search(starting_node, search_level):
     var actual_level = 0
     var count = 0
     var nextStop = 0
+    var lastNode = null
     queue.append(search_root)
     search_root.starting()
     nextStop = queue.size()
@@ -45,45 +47,39 @@ func breadth_first_search(starting_node, search_level):
                 break
         if !node.is_highlighted(): 
             node.highlight()
+            node.change_level(actual_level)
+            node.set_parent(lastNode)
             #check neighbour
             var this_x = node.get_x()
             var this_y = node.get_y()
+            var nextNode
             if is_in_grid(this_x + 1, this_y):
                 if !gridmap[this_x+1][this_y].is_highlighted():
-                    queue.append(gridmap[this_x+1][this_y])
+                    nextNode = gridmap[this_x+1][this_y]
+                    queue.append(nextNode)
+                    nextNode.set_parent(node)
             if is_in_grid(this_x - 1, this_y):
                 if !gridmap[this_x-1][this_y].is_highlighted():
-                    queue.append(gridmap[this_x-1][this_y])
+                    nextNode = gridmap[this_x-1][this_y]
+                    queue.append(nextNode)
+                    nextNode.set_parent(node)
             if is_in_grid(this_x, this_y + 1):
                 if !gridmap[this_x][this_y+1].is_highlighted():
-                    queue.append(gridmap[this_x][this_y+1])
+                    nextNode = gridmap[this_x][this_y+1]
+                    queue.append(nextNode)
+                    nextNode.set_parent(node)
             if is_in_grid(this_x, this_y - 1):
                 if !gridmap[this_x][this_y-1].is_highlighted():
-                    queue.append(gridmap[this_x][this_y-1])
-            count += 1
-        else: 
-            count += 1
+                    nextNode = gridmap[this_x][this_y-1]
+                    queue.append(nextNode)
+                    nextNode.set_parent(node) 
+        count += 1
         
 
        
 func is_in_grid(x,y):
     return x >= 0 && x < height && y >= 0 && y < width
 
-#BuscaEmLargura
-#   escolha uma raiz s de G
-#   marque s
-#   insira s em F
-#   enquanto F não está vazia faça
-#      seja v o primeiro vértice de F
-#      para cada w ∈ listaDeAdjacência de v faça
-#         se w não está marcado então
-#           visite aresta entre v e w
-#           marque w
-#           insira w em F
-#         senao se w ∈ F entao
-#           visite aresta entre v e w
-#         fim se
-#      fim para
-#      retira v de F
-#   fim enquanto
+func handle_tile_click(node):
+    print(node)
     
