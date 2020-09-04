@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://PlayerForTests/PlayerTD.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 
-[node name="PlayerTD" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[node name="PlayerTD" type="Area2D"]
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.988235, 0.309804, 0.309804, 1 )
 texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+[connection signal="mouse_entered" from="." to="." method="_on_PlayerTD_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_PlayerTD_mouse_exited"]

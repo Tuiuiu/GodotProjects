@@ -9,7 +9,7 @@ var movementDistance = 8
 signal gridmap_started(gridHeight, gridWidth)
 
 func _ready():
-    position = Vector2(64,64)
+    position = Vector2(0,0)
     #start_grid(height, width)
     #print_grid()
     #gridmap[randi()%height][randi()%width].highlight()
@@ -83,6 +83,10 @@ func get_node_in_grid(h, w):
        
 func is_in_grid(x, y):
     return x >= 0 && x < height && y >= 0 && y < width
+
+func reset_highlights():
+    for node in get_children():
+        node.remove_highlight()
 
 func handle_tile_click(node):
     var movementVariation = movementDistance - node.get_level()

@@ -105,5 +105,6 @@ func highlight_path():
     
 func hide_path():
     highlight_sprite()
+    distance_hide()
     if (parentInTree != null):
         parentInTree.hide_path()
