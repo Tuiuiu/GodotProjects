@@ -1,18 +1,26 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://TopDownTest/Main.gd" type="Script" id=1]
 [ext_resource path="res://TileHighlighter/GridMap.tscn" type="PackedScene" id=2]
-[ext_resource path="res://PlayerForTests/PlayerTD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://TurnManager/TurnManager.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PlayerForTests/PlayerTD.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
 
 [node name="GridMap" parent="." instance=ExtResource( 2 )]
 
-[node name="PlayerTD" parent="." instance=ExtResource( 3 )]
-position = Vector2( 180.429, 100.238 )
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 108, 108 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
+
+[node name="TurnManager" parent="." instance=ExtResource( 3 )]
+
+[node name="PlayerTD" parent="TurnManager" instance=ExtResource( 4 )]
+position = Vector2( 180.429, 100.238 )
+
+[node name="PlayerTD2" parent="TurnManager" instance=ExtResource( 4 )]
+
+[node name="PlayerTD3" parent="TurnManager" instance=ExtResource( 4 )]
+position = Vector2( 37.2313, 138.901 )

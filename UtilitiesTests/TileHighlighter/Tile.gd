@@ -8,8 +8,8 @@ onready var parentInTree = null
 onready var hasParent = false
 onready var level = 9999
 
-var posx
-var posy
+var posr
+var posc
 var mouseInside = false
 
 signal path_tile_mouse_entered(node)
@@ -24,12 +24,12 @@ func _process(delta):
         if mouseInside && highlighted:
             emit_signal("path_tile_clicked", self)
 
-# x = row, y = column, position in X is defined by its columns number
-func calculate_position(x,y):
-    position.x = y*sprite_size
-    position.y = x*sprite_size
-    posx = x
-    posy = y
+# r = row, c = column, position in X is defined by its columns number
+func calculate_position(r,c):
+    position.x = c*sprite_size
+    position.y = r*sprite_size
+    posr = r
+    posc = c
 
 func highlight():
     highlighted = true
@@ -52,11 +52,11 @@ func revert_sprite():
 func is_highlighted():
     return highlighted
 
-func get_x():
-    return posx
+func get_r():
+    return posr
     
-func get_y():
-    return posy
+func get_c():
+    return posc
     
 func set_parent(pNode):
     if (!hasParent):
@@ -77,13 +77,12 @@ func get_level():
     return level
 
 func _on_Tile_mouse_entered():
+    mouseInside = true
     if (highlighted):
-        mouseInside = true
         emit_signal("path_tile_mouse_entered", self)        
 
 func _on_Tile_mouse_exited():
-    if (highlighted):
-        mouseInside = false       
+    mouseInside = false       
 
 func movement_highlight():
     $Sprite.modulate = Color(1, 1, 0)

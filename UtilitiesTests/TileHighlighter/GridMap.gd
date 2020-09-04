@@ -64,27 +64,27 @@ func breadth_first_search(starting_node, search_level):
             node.highlight()
             node.set_parent(lastNode)
             #check neighbour
-            var this_x = node.get_x()
-            var this_y = node.get_y()
+            var this_r = node.get_r()
+            var this_c = node.get_c()
             var nextNode
-            if is_in_grid(this_x + 1, this_y):
-                if !gridmap[this_x+1][this_y].is_highlighted():
-                    nextNode = gridmap[this_x+1][this_y]
+            if is_in_grid(this_r + 1, this_c):
+                if !gridmap[this_r+1][this_c].is_highlighted():
+                    nextNode = gridmap[this_r+1][this_c]
                     queue.append(nextNode)
                     nextNode.set_parent(node)
-            if is_in_grid(this_x - 1, this_y):
-                if !gridmap[this_x-1][this_y].is_highlighted():
-                    nextNode = gridmap[this_x-1][this_y]
+            if is_in_grid(this_r - 1, this_c):
+                if !gridmap[this_r-1][this_c].is_highlighted():
+                    nextNode = gridmap[this_r-1][this_c]
                     queue.append(nextNode)
                     nextNode.set_parent(node)
-            if is_in_grid(this_x, this_y + 1):
-                if !gridmap[this_x][this_y+1].is_highlighted():
-                    nextNode = gridmap[this_x][this_y+1]
+            if is_in_grid(this_r, this_c + 1):
+                if !gridmap[this_r][this_c+1].is_highlighted():
+                    nextNode = gridmap[this_r][this_c+1]
                     queue.append(nextNode)
                     nextNode.set_parent(node)
-            if is_in_grid(this_x, this_y - 1):
-                if !gridmap[this_x][this_y-1].is_highlighted():
-                    nextNode = gridmap[this_x][this_y-1]
+            if is_in_grid(this_r, this_c - 1):
+                if !gridmap[this_r][this_c-1].is_highlighted():
+                    nextNode = gridmap[this_r][this_c-1]
                     queue.append(nextNode)
                     nextNode.set_parent(node) 
         count += 1
