@@ -6,11 +6,14 @@ var sprite_size = 16
 onready var highlighted = false
 onready var parentInTree = null
 onready var hasParent = false
-onready var level = 0
-onready var differentColor = false
+onready var level = 9999
+
 var posx
 var posy
 var mouseInside = false
+
+signal path_tile_mouse_entered(node)
+
 
 func _ready():
     $Sprite.show()
@@ -18,7 +21,7 @@ func _ready():
 
 func _process(delta):
     if Input.is_action_just_pressed("left_click"):
-        if mouseInside:
+        if mouseInside && highlighted:
             emit_signal("path_tile_clicked", self)
 
 # x = row, y = column, position in X is defined by its columns number
@@ -34,13 +37,14 @@ func highlight():
     
 func remove_highlight():
     highlighted = false
+    level = 9999
+    hasParent = false
+    parentInTree = null
     revert_sprite()
+    distance_hide()
 
 func highlight_sprite():
-    if differentColor:
-        $Sprite.modulate = Color(0, 1, 0)
-    else:
-        $Sprite.modulate = Color(0, 0, 1)
+    $Sprite.modulate = Color(0, 0, 1)
 
 func revert_sprite():
     $Sprite.modulate = Color(1, 1, 1)
@@ -62,8 +66,8 @@ func set_parent(pNode):
 func get_parent():
     return parentInTree
     
-func starting():
-    differentColor = true
+#func starting():
+#    differentColor = true
 
 func change_level(new_level):
     level = new_level
@@ -75,18 +79,11 @@ func get_level():
 func _on_Tile_mouse_entered():
     if (highlighted):
         mouseInside = true
-        #$Sprite.modulate = Color(1, 1, 0)
-        #$Sprite/Label.show()
-        highlight_path()
-    #highlight_path()
+        emit_signal("path_tile_mouse_entered", self)        
 
 func _on_Tile_mouse_exited():
     if (highlighted):
-        mouseInside = false
-        #highlight_sprite()
-        #$Sprite/Label.hide()
-        hide_path()
-    #hide_path()
+        mouseInside = false       
 
 func movement_highlight():
     $Sprite.modulate = Color(1, 1, 0)
@@ -107,4 +104,5 @@ func hide_path():
     highlight_sprite()
     distance_hide()
     if (parentInTree != null):
-        parentInTree.hide_path()
+        return parentInTree.hide_path()
+    return true

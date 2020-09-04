@@ -5,8 +5,11 @@ var gridmap = []
 var height = 16
 var width = 16
 var movementDistance = 8
+var lastTileHovered = null
+
 
 signal gridmap_started(gridHeight, gridWidth)
+signal move_player_to_tile(tile, steps)
 
 func _ready():
     position = Vector2(0,0)
@@ -24,9 +27,17 @@ func start_grid():
             gridmap[i].append(tile)
             add_child(tile)
             tile.connect("path_tile_clicked", self, "handle_tile_click")
+            tile.connect("path_tile_mouse_entered", self, "path_tile_mouse_entered_handle")
     emit_signal("gridmap_started", height, width)
     
-            
+func path_tile_mouse_entered_handle(node):
+    if lastTileHovered != null:
+        var result = lastTileHovered.hide_path()
+        if result is GDScriptFunctionState:
+            result = yield (result, "completed")
+    lastTileHovered = node
+    node.highlight_path()
+  
 func print_grid():
     print(gridmap)
 
@@ -38,7 +49,7 @@ func breadth_first_search(starting_node, search_level):
     var nextStop = 0
     var lastNode = null
     queue.append(search_root)
-    search_root.starting()
+    #search_root.starting()
     nextStop = queue.size()
     #queue.append("break")
     
@@ -49,8 +60,8 @@ func breadth_first_search(starting_node, search_level):
             if actual_level >= search_level:
                 break
         if !node.is_highlighted(): 
-            node.highlight()
             node.change_level(actual_level)
+            node.highlight()
             node.set_parent(lastNode)
             #check neighbour
             var this_x = node.get_x()
@@ -89,5 +100,6 @@ func reset_highlights():
         node.remove_highlight()
 
 func handle_tile_click(node):
-    var movementVariation = movementDistance - node.get_level()
+    emit_signal("move_player_to_tile", node, node.get_level())
+    
     
