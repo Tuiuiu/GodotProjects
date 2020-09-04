@@ -4,25 +4,28 @@ var tileRes = preload("res://TileHighlighter/Tile.tscn")
 var gridmap = []
 var height = 16
 var width = 16
+var movementDistance = 8
 
+signal gridmap_started(gridHeight, gridWidth)
 
 func _ready():
-    randomize()
     position = Vector2(64,64)
-    start_grid(height, width)
+    #start_grid(height, width)
     #print_grid()
     #gridmap[randi()%height][randi()%width].highlight()
-    breadth_first_search(gridmap[randi()%height][randi()%width], 8)
+    #breadth_first_search(gridmap[randi()%height][randi()%width], movementDistance)
 
-func start_grid(x, y):
-    for i in range(0, x):
+func start_grid():
+    for i in range(0, height):
         gridmap.append([])
-        for j in range(y):
+        for j in range(width):
             var tile = tileRes.instance()
             tile.calculate_position(i,j)
             gridmap[i].append(tile)
             add_child(tile)
             tile.connect("path_tile_clicked", self, "handle_tile_click")
+    emit_signal("gridmap_started", height, width)
+    
             
 func print_grid():
     print(gridmap)
@@ -75,11 +78,12 @@ func breadth_first_search(starting_node, search_level):
                     nextNode.set_parent(node) 
         count += 1
         
-
+func get_node_in_grid(h, w):
+    return gridmap[h][w]
        
-func is_in_grid(x,y):
+func is_in_grid(x, y):
     return x >= 0 && x < height && y >= 0 && y < width
 
 func handle_tile_click(node):
-    print(node)
+    var movementVariation = movementDistance - node.get_level()
     

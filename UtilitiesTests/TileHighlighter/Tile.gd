@@ -21,12 +21,12 @@ func _process(delta):
         if mouseInside:
             emit_signal("path_tile_clicked", self)
 
+# x = row, y = column, position in X is defined by its columns number
 func calculate_position(x,y):
-    position.x = x*sprite_size
-    position.y = y*sprite_size
+    position.x = y*sprite_size
+    position.y = x*sprite_size
     posx = x
     posy = y
-    #print(position)
 
 func highlight():
     highlighted = true
@@ -64,9 +64,6 @@ func get_parent():
     
 func starting():
     differentColor = true
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#    pass
 
 func change_level(new_level):
     level = new_level
