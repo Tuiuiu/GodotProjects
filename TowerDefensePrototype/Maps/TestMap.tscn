@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Maps/Spawner.gd" type="Script" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 80, 120, 0, 0, 0, 0, 300, 120, 0.735092, -49.9862, -0.735092, 49.9862, 340, 170, 0.735092, -44.1055, -0.735092, 44.1055, 340, 350, 0, 0, 0, 0, 380, 390, 0, 0, 0, 0, 610, 390, 0, 44.1055, 0, -44.1055, 650, 350, 0, 59.5424, 0, -59.5424, 650, 170, 0, 0, 0, 0, 710, 120, 0, 0, 0, 0, 850, 120 )
+}
+
+[node name="Map" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="Path2D"]
+wait_time = 0.3
+autostart = true
+[connection signal="timeout" from="Path2D/Timer" to="Path2D" method="_on_Timer_timeout"]
