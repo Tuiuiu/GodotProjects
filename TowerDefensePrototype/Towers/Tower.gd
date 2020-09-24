@@ -1,6 +1,6 @@
 extends Node2D
 
-export var cooldown = 0.5
+export var cooldown = 2.5
 
 var can_shoot = true
 onready var nextShot = 0
@@ -11,9 +11,8 @@ var projectile = preload("res://NPCs/Projectiles/Projectile.tscn")
 
 
 func _ready():
-    pass # Replace with function body.
+    pass 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     if (onCombat == true):
         shoot()  

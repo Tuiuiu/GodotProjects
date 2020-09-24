@@ -3,6 +3,7 @@ extends PathFollow2D
 export (float) var SPEED = 200
 export (float) var MAX_OFFSET = 32
 
+signal end_of_path
 var life
 
 func _ready():
@@ -13,6 +14,7 @@ func _physics_process(delta):
     offset += SPEED * delta
 
     if (unit_offset >= 1):
+        emit_signal("end_of_path")
         die()
         
 func take_damage(damage):
