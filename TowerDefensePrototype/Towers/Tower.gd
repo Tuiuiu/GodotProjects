@@ -1,9 +1,8 @@
 extends Node2D
 
-export var cooldown = 2.5
+export var cooldown = 1.0
 
 var can_shoot = true
-onready var nextShot = 0
 onready var onCombat = false
 onready var visibleEnemies = 0
 onready var targets = []
