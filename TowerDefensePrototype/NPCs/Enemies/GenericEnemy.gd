@@ -9,9 +9,9 @@ onready var healthBar = $HealthDisplay
 var currentLife
 
 func _ready():
-    var randOffset = rand_range(-MAX_OFFSET, MAX_OFFSET)
-    $Area2D.position.y += randOffset
-    healthBar.position.y += randOffset
+    #var randOffset = rand_range(-MAX_OFFSET, MAX_OFFSET)
+    #$Area2D.position.y += randOffset
+    #healthBar.position.y += randOffset
     currentLife = maxHealth
     healthBar.set_max_value(maxHealth)
     healthBar.update_healthbar(currentLife)
@@ -34,9 +34,3 @@ func die():
 
 func get_max_health():
     return maxHealth
-
-func _on_Area2D_area_entered(area):
-    if (area.is_in_group("Projectile")):
-        var damage = area.get_damage()
-        area.queue_free()
-        take_damage(damage)

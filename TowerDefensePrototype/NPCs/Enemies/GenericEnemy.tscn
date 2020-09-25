@@ -22,4 +22,3 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
