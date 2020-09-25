@@ -4,7 +4,7 @@ export (float) var SPEED = 200
 export (float) var MAX_OFFSET = 32
 
 signal end_of_path
-onready var maxHealth = 3
+onready var maxHealth = 5
 onready var healthBar = $HealthDisplay
 var currentLife
 
@@ -13,8 +13,7 @@ func _ready():
     #$Area2D.position.y += randOffset
     #healthBar.position.y += randOffset
     currentLife = maxHealth
-    healthBar.set_max_value(maxHealth)
-    healthBar.update_healthbar(currentLife)
+    healthBar.start(maxHealth, currentLife)
 
 func _physics_process(delta):
     offset += SPEED * delta
